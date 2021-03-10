@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Scaffold</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  </head>
+  <body>
+    <div id="app"></div>
+        <main>
+    <section id="intro">
+        <h1 class="intro__hed">PUBLIC TRANSPORT AND INEQUALITY IN THE U.S</h1>
+        <h4 class="intro__dek">By Stephanie Ramos</h4>
+        <p class="intro__p"> Public transportation services in citiesare important in many ways. Access to just about 
+          everything associated with upward mobility and jobs, quality foor, and goods, healthcare, 
+          and schooling relies on the ability to get around in an efficient way, and for an affordable
+          price. </p>
+          <p>U.S public transportation lags behind much of the rest of the world in innovation and ridership.
+          While some cities do have impressive public transportation systems, for the most part the U.S is 
+          a car-dependent society. <p>
+          <p>The 2019 Census data showed that only 5% of all US commuters typically  use public transportation. In major cities,
+          that number increases to 10%. This trend has not changed over the last  10 years.</p>
+          <p>While people of all income levels use public transit, some people depend on it more than others. These
+          riders are often lower-income, minority groups who may not own cars and who rely on transitfor Access
+          to opportunities like jobs and schools.</p>
+          <div style="text-align:center">
+            <p style="color:#696969;margin-top:2rem">Scroll down to explore</p>
+            <i class="fa fa-arrow-down" style="font-size:50px;color:#696969"></i>
+          </div>
+      </section>
+
+      <section id="scrolly">
+        <article>
+          <div class="step" data-step="1">
+            <h4>Counties with  popular public transit systems are often northern and coastal</h4>
+            <p>The New York area has the largest  percentage of people who use public transit
+             to commute to work, followed by counties including major coastal cities like San Fancisco, D.C, 
+             and Boston. </p>
+             <p>Public transportation is less popular in counties including major southern cities.</p>
+          </div>
+          <div class="step" data-step="2">
+            <h4>Riding transit takes much loger than driving</h4>
+            <p>Those taking transportation in areas where service is limited are bound to be in for longer commutes.
+              In counties including major southern cities like Charlotte and Atlanta, the typical transit commute length is
+              double the commute length for drivers. But, counties including major coastal cities with robust transit still show numbers that
+              lag well behind driving.</p>
+            <p>Note that in areas were public transit is popular, the additional commute lenght for public transit users
+            is shorter.</p>
+          </div>
+          <div class="step" data-step="3">
+            <h4>Public transit commuters earn less than drivers</h4>
+            <p>There is a gap in earnings between public transit commuters and drivers, suggesting that public transportation is 
+            less available in wealthier areas or people choose to avoid it if they can affor a vehicle.</p>
+            <p>Given that the difference in earnings is larger in areas with low transit use, the lack of an adequate public transportation
+            system affects the low-income population disproportionately.</p>
+          </div>
+        </article>
+        <figure>
+          
+          <div id="map"></div>
+        </figure>
+      </section>
+      <div>
+      <hr style="opacity:0.3;margin-top:5%">
+          <h3>Select a city</h3>
+          <p style="margin: 0% 15% 0% 15%;">In cities with high percentages of transit commuters, the wage gap and the difference in commute lenght between
+          transit riders and drivers is smaller.</p></div>
+      <section id="outro">
+          <figure id="chart" style="display:flex">
+            <div id="donut"></div>
+            <div id="time"></div>
+            <div id="income"></div>
+          </figure>
+      </section>
+
+    </main>
+    <script src="bundle.js"></script>
+    <script src='https://d3js.org/d3.v4.min.js'></script>
+    <script src="https://unpkg.com/topojson-client@2"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/6.2.0/d3.min.js"></script>
+    <script src="https://unpkg.com/intersection-observer"></script>
+    <script src="https://unpkg.com/d3@5.9.1/dist/d3.min.js"></script>
+    <script src="https://unpkg.com/intersection-observer@0.5.1/intersection-observer.js"></script>
+    <script src="https://unpkg.com/scrollama"></script>
+    <script src="https://d3js.org/d3-collection.v1.min.js"></script>
+  </body>
+</html>
