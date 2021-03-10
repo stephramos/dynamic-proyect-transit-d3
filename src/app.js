@@ -38,9 +38,6 @@ Promise.all([
     time.forEach(d => (time_data[d.GEOID] = d.time))
     const income_data = {}
     income.forEach(d => (income_data[d.GEOID] = d.gap + 1))
-    //const donut = {}
-    //income.forEach(d => (donut[d.GEOID] = d.gap))
-    //console.log(donut_data)
     myVis(us, transit_data, cities, time_data, income_data)
     donut(donut_data)
 })
@@ -71,7 +68,6 @@ function myVis(us, data, cities, time_data, income_data){
 
 
 function update1(){
-    //d3.selectAll("text").remove();
     svg.selectAll(".textCity").remove();
     svg.selectAll(".subtitle").remove();
     svg.selectAll(".titleMap").remove();
@@ -198,7 +194,7 @@ function update1(){
 
     function transition1(){
         const vals =  [.1, .2, .5, .6, .7, .8, .8, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 25, 30, 35, 40, 65, 0]
-        let delay = 4000
+        let delay = 2000
         
             vals.forEach( (val, idx) => {
             timeOuts.push(setTimeout(function () {
@@ -268,16 +264,8 @@ function update1(){
    
 
 function update2(){
-    // d3.select("map").select("svg")
-    //      .selectAll("path")
-    //      .each(function(d,i){
-    //          d3.select(this)
-    //            .transition()
-    //            .duration(0);
-    //      });
-    //clearTimeout(oneTimeout);
+ 
     d3.selectAll("path").interrupt();
-    //d3.selectAll("*").interrupt();
 
     const color1 = d3.scaleThreshold()
         .domain([0.5, 1.0, 1.2, 1.4, 1.6, 1.8, 2.0, 3.0])
@@ -407,7 +395,7 @@ function update2(){
         .text("Source: American Community Survey 5-Year Data (2019)");
     
     const vals = [5.0, 3.5, 3.0, 2.8, 2.6, 2.4, 2.2, 2.0, 1.9, 1.8, 1.7, 1.6, 1.5, 1.4, 1.3, 1.2, 1.1, 1.0, 0.5, 0, 4, 5]
-    let delay = 4000
+    let delay = 2000
     vals.forEach( (val, idx) => {
         timeOuts.push(setTimeout(function () {
                 mytransition2(val);
@@ -601,7 +589,7 @@ function update3(){
         .text("Source: American Community Survey 5-Year Data (2019)");
     
     const vals = [10, 4.0, 3.5, 3.0, 2.8, 2.6, 2.4, 2.2, 2.0, 1.8, 1.6, 1.4, 1.2, 1.0, 0.8, 0.6, 0.4, 0.2, 0, -0.5, -1, 10]
-    let delay = 4000
+    let delay = 2000
     vals.forEach( (val, idx) => {
         timeOuts.push(setTimeout(function () {
                 mytransition3(val);
