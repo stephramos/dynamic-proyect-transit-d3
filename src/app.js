@@ -57,6 +57,18 @@ function myVis(us, data, cities, time_data, income_data){
         //.range(d3.schemeBuPu[9])
         .range(["#f1fbfb", "#bfd3e6", "#9ebcda", "#8c96c6",
         "#8c6bb1", "#88419d", "#732b6d", "#4d004b", "#3f0722"]);
+    
+    const color1 = d3.scaleThreshold()
+        .domain([0.5, 1.0, 1.2, 1.4, 1.6, 1.8, 2.0, 3.0])
+        .range(["#e9effb",
+        "#dee7f8",
+        "#d0d1e6",
+        "#a6bddb",
+        "#74a9cf",
+        "#3690c0",
+        "#0570b0",
+        "#045a8d",
+        "#023858"]);
   
     // Create SVG
     let svg = d3.select("#map")
@@ -127,17 +139,16 @@ function update1(){
         .enter()
         .append('g').attr('class', 'legendEntry')
         .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
-
     
     legend
         .append('rect')
         .attr("x", width - 120)
         .attr("y", height - 200)
-       .attr("width", 10)
-       .attr("height", 10)
-       .style("stroke", "black")
-       .style("stroke-width", 1)
-       .style("fill", function(d){return d;}); 
+        .attr("width", 10)
+        .attr("height", 10)
+        .style("stroke", "black")
+        .style("stroke-width", 1)
+        .style("fill", function(d){return d;}); 
     
     legend
        .append('text')
@@ -202,6 +213,12 @@ function update1(){
             }, delay));
             delay += 500;
         })
+    
+    g.append("path")
+        .datum(topojson.mesh(us, us.objects.states, (a, b) => a !== b))
+        .attr("fill", "none")
+        .attr("stroke", "white")
+        .attr("d", path);
 }
   
     function mytransition1(val){
@@ -261,23 +278,9 @@ function update1(){
     }
 
 
-   
-
 function update2(){
  
     d3.selectAll("path").interrupt();
-
-    const color1 = d3.scaleThreshold()
-        .domain([0.5, 1.0, 1.2, 1.4, 1.6, 1.8, 2.0, 3.0])
-        .range(["#e9effb",
-        "#dee7f8",
-        "#d0d1e6",
-        "#a6bddb",
-        "#74a9cf",
-        "#3690c0",
-        "#0570b0",
-        "#045a8d",
-        "#023858"]);
 
     g.selectAll("path").data(topojson.feature(us, us.objects.counties).features)
         .join("path")
@@ -393,15 +396,27 @@ function update2(){
         //.attr("font-weight", 550)
         .style("fill", "#696969")
         .text("Source: American Community Survey 5-Year Data (2019)");
+
+        transition2()
+
+        g.append("path")
+            .datum(topojson.mesh(us, us.objects.states, (a, b) => a !== b))
+            .attr("fill", "none")
+            .attr("stroke", "white")
+            .attr("d", path);
+    }
     
-    const vals = [5.0, 3.5, 3.0, 2.8, 2.6, 2.4, 2.2, 2.0, 1.9, 1.8, 1.7, 1.6, 1.5, 1.4, 1.3, 1.2, 1.1, 1.0, 0.5, 0, 5]
-    let delay = 2000
-    vals.forEach( (val, idx) => {
-        timeOuts.push(setTimeout(function () {
-                mytransition2(val);
-            }, delay));
-            delay += 500;
-        })
+    function transition2(){
+
+        const vals = [5.0, 3.5, 3.0, 2.8, 2.6, 2.4, 2.2, 2.0, 1.9, 1.8, 1.7, 1.6, 1.5, 1.4, 1.3, 1.2, 1.1, 1.0, 0.5, 0, 5]
+        let delay = 2000
+        vals.forEach( (val, idx) => {
+            timeOuts.push(setTimeout(function () {
+                    mytransition2(val);
+                }, delay));
+                delay += 500;
+            })   
+    }
       
     function mytransition2(val){
         
@@ -460,7 +475,7 @@ function update2(){
                 .text(`Using public transit takes less than ${val} times as than driving`);
     
         }
-}
+
 
 function update3(){
      
@@ -596,6 +611,12 @@ function update3(){
             }, delay));
             delay += 500;
         })
+
+    g.append("path")
+        .datum(topojson.mesh(us, us.objects.states, (a, b) => a !== b))
+        .attr("fill", "none")
+        .attr("stroke", "white")
+        .attr("d", path);
       
     function mytransition3(val){
         
