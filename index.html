@@ -6,16 +6,25 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   </head>
   <body>
+  <div class="topnav">
+    <a href="#maps">County maps</a>
+    <a href="#cities">Select a city</a>
+    <div class="topnav-right">
+      <a href="https://docs.google.com/spreadsheets/d/1EUXvHHe6ojhsVQTpV5U1fcb2zAGAfq3MtRkSpo6-Y4I/export?format=csv" download>Data (counties)</a>
+      <a href="https://docs.google.com/spreadsheets/d/13ivEtqGyFaZm4hG_yk9Lc4Kif5kHI7dXcuUb_v3evWg/export?format=csv" download>Data (cities)</a>
+      <a href="https://github.com/stephramos/dynamic-proyect-transit-d3" style="padding-top:8px"><i class="fa fa-fw fa-github fa-10x" style="font-size:22px;padding-top:0px"></i> </a>
+    </div>
+  </div>
     <div id="app"></div>
-        <main>
+        <main style="padding-top:3%">
     <section id="intro">
         <h1 class="intro__hed">PUBLIC TRANSPORT AND INEQUALITY IN THE U.S</h1>
         <h4 class="intro__dek">By Stephanie Ramos</h4>
-        <p class="intro__p"> Public transportation services in citiesare important in many ways. Access to just about 
+        <p class="intro__p"> Public transportation services in cities are important in many ways. Access to just about 
           everything associated with upward mobility and jobs, quality foor, and goods, healthcare, 
           and schooling relies on the ability to get around in an efficient way, and for an affordable
           price. </p>
-          <p>U.S public transportation lags behind much of the rest of the world in innovation and ridership.
+          <p>Regardless of its importance, U.S public transportation lags behind much of the rest of the world in innovation and ridership.
           While some cities do have impressive public transportation systems, for the most part the U.S is 
           a car-dependent society. <p>
           <p>The 2019 Census data showed that only 5% of all US commuters typically  use public transportation. In major cities,
@@ -27,6 +36,7 @@
             <p style="color:#696969;margin-top:2rem">Scroll down to explore</p>
             <i class="fa fa-arrow-down" style="font-size:50px;color:#696969"></i>
           </div>
+          <a name="maps"></a>
       </section>
 
       <section id="scrolly">
@@ -60,17 +70,21 @@
           <div id="map"></div>
         </figure>
       </section>
-      <div>
       <hr style="opacity:0.3;margin-top:5%">
-          <h3>Select a city</h3>
-          <p style="margin: 0% 15% 0% 15%;">In cities with high percentages of transit commuters, the wage gap and the difference in commute lenght between
-          transit riders and drivers is smaller.</p></div>
       <section id="outro">
+          <div class="select_city">
+            <a name="cities"></a>
+            <h3>Select a city</h3>
+            <p style="margin: 0% 15% 0% 15%;">In cities with high percentages of transit commuters, the wage gap and the difference in commute lenght between
+            transit riders and drivers is smaller.</p>
+          </div>
+          <div id="figures_cities">
           <figure id="chart" style="display:flex">
             <div id="donut"></div>
             <div id="time"></div>
             <div id="income"></div>
           </figure>
+          <div>
       </section>
 
     </main>

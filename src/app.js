@@ -394,7 +394,7 @@ function update2(){
         .style("fill", "#696969")
         .text("Source: American Community Survey 5-Year Data (2019)");
     
-    const vals = [5.0, 3.5, 3.0, 2.8, 2.6, 2.4, 2.2, 2.0, 1.9, 1.8, 1.7, 1.6, 1.5, 1.4, 1.3, 1.2, 1.1, 1.0, 0.5, 0, 4, 5]
+    const vals = [5.0, 3.5, 3.0, 2.8, 2.6, 2.4, 2.2, 2.0, 1.9, 1.8, 1.7, 1.6, 1.5, 1.4, 1.3, 1.2, 1.1, 1.0, 0.5, 0, 5]
     let delay = 2000
     vals.forEach( (val, idx) => {
         timeOuts.push(setTimeout(function () {
@@ -588,7 +588,7 @@ function update3(){
         .style("fill", "#696969")
         .text("Source: American Community Survey 5-Year Data (2019)");
     
-    const vals = [10, 4.0, 3.5, 3.0, 2.8, 2.6, 2.4, 2.2, 2.0, 1.8, 1.6, 1.4, 1.2, 1.0, 0.8, 0.6, 0.4, 0.2, 0, -0.5, -1, 10]
+    const vals = [10.0, 4.0, 3.5, 3.0, 2.8, 2.6, 2.4, 2.2, 2.0, 1.8, 1.6, 1.4, 1.2, 1.0, 0.8, 0.6, 0.4, 0.2, 0, -0.5, -1, 10.0]
     let delay = 2000
     vals.forEach( (val, idx) => {
         timeOuts.push(setTimeout(function () {
