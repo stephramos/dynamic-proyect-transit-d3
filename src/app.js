@@ -27,7 +27,7 @@ Promise.all([
     d3.csv("data/transit.csv"),
     d3.csv("data/cities.csv"),
     d3.csv("data/time.csv"),
-    d3.csv("data/income.csv"),
+    d3.csv("data/income1.csv"),
     d3.csv("data/donut_data.csv")
 ]).then(results => {
     console.log("loading data")
@@ -37,7 +37,7 @@ Promise.all([
     const time_data = {}
     time.forEach(d => (time_data[d.GEOID] = d.time))
     const income_data = {}
-    income.forEach(d => (income_data[d.GEOID] = d.gap + 1))
+    income.forEach(d => (income_data[d.GEOID] = d.gap * 100))
     myVis(us, transit_data, cities, time_data, income_data)
     donut(donut_data)
 })
@@ -211,14 +211,8 @@ function update1(){
             timeOuts.push(setTimeout(function () {
                 mytransition1(val);
             }, delay));
-            delay += 500;
+            delay += 700;
         })
-    
-    g.append("path")
-        .datum(topojson.mesh(us, us.objects.states, (a, b) => a !== b))
-        .attr("fill", "none")
-        .attr("stroke", "white")
-        .attr("d", path);
 }
   
     function mytransition1(val){
@@ -383,7 +377,8 @@ function update2(){
         .style("text-anchor", "middle") 
         .attr("font-weight", 550)
         .style("fill", "#696969")
-        .text("Using public transit takes less than 5 times as than driving");
+        .text("Using public transit takes less than 5 times as driving");
+        
     
     svg.append("text")
         .attr("x", 80)             
@@ -398,12 +393,6 @@ function update2(){
         .text("Source: American Community Survey 5-Year Data (2019)");
 
         transition2()
-
-        g.append("path")
-            .datum(topojson.mesh(us, us.objects.states, (a, b) => a !== b))
-            .attr("fill", "none")
-            .attr("stroke", "white")
-            .attr("d", path);
     }
     
     function transition2(){
@@ -414,7 +403,7 @@ function update2(){
             timeOuts.push(setTimeout(function () {
                     mytransition2(val);
                 }, delay));
-                delay += 500;
+                delay += 700;
             })   
     }
       
@@ -472,7 +461,7 @@ function update2(){
                 .style("text-anchor", "middle") 
                 .attr("font-weight", 550)
                 .style("fill", "#696969")
-                .text(`Using public transit takes less than ${val} times as than driving`);
+                .text(`Using public transit takes less than ${val} times as driving`);
     
         }
 
@@ -480,16 +469,16 @@ function update2(){
 function update3(){
      
     const color2 = d3.scaleThreshold()
-        .domain([0, 0.2, 0.6, 0.8, 1.0, 1.5, 2.0, 2.5])
-        .range(["#cec2e6",
-        "#bebed5",
-        "#9fa0c4",
+        .domain([30, 40, 50, 60, 70, 80, 90, 100])
+        .range(["#fcfbfd",
+        "#efedf5",
+        "#dadaeb",
+        "#bcbddc",
         "#9e9ac8",
         "#807dba",
         "#6a51a3",
         "#54278f",
-        "#3f007d",
-        "#240050"]);
+        "#3f007d"]);
 
     g.selectAll("path").data(topojson.feature(us, us.objects.counties).features)
         .join("path")
@@ -563,9 +552,9 @@ function update3(){
        .attr("dy", "0.8em") //place text one line *below* the x,y point
        .text(function(d,i) {
            var extent = color2.invertExtent(d);
-           if (extent[0] == null) extent[0] = -1;
-           if (extent[1] == null) extent[1] = 10;
-           var format = d3.format("0.1f");
+           if (extent[0] == null) extent[0] = 0;
+           if (extent[1] == null) extent[1] = 300;
+           var format = d3.format("0.0f");
            return format(+extent[0]) + " - " + format(+extent[1]);});
 
     //Create Title 
@@ -589,7 +578,8 @@ function update3(){
         .style("text-anchor", "middle") 
         .attr("font-weight", 550)
         .style("fill", "#696969")
-        .text("Earnings of drivers are less than 10 times the earnings of transit riders");
+        //.text("Earnings of drivers are less than 10 times the earnings of transit riders");
+        .text("Earnings of transit riders are more than 0% of drivers' earnings");
     
     svg.append("text")
         .attr("x", 80)             
@@ -603,20 +593,15 @@ function update3(){
         .style("fill", "#696969")
         .text("Source: American Community Survey 5-Year Data (2019)");
     
-    const vals = [10.0, 4.0, 3.5, 3.0, 2.8, 2.6, 2.4, 2.2, 2.0, 1.8, 1.6, 1.4, 1.2, 1.0, 0.8, 0.6, 0.4, 0.2, 0, -0.5, -1, 10.0]
+    //const vals = [10.0, 4.0, 3.5, 3.0, 2.8, 2.6, 2.4, 2.2, 2.0, 1.8, 1.6, 1.4, 1.2, 1.0, 0.8, 0.6, 0.4, 0.2, 0, -0.5, -1, 10.0]
+    const vals = [0, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100, 120, 150, 300, 0]
     let delay = 2000
     vals.forEach( (val, idx) => {
         timeOuts.push(setTimeout(function () {
                 mytransition3(val);
             }, delay));
-            delay += 500;
+            delay += 700;
         })
-
-    g.append("path")
-        .datum(topojson.mesh(us, us.objects.states, (a, b) => a !== b))
-        .attr("fill", "none")
-        .attr("stroke", "white")
-        .attr("d", path);
       
     function mytransition3(val){
         
@@ -625,14 +610,14 @@ function update3(){
             .attr("d", path)
             .transition().delay(0)
             .style("fill", function(d) {
-                    if (income_data[d.id] <= val) {return color2(income_data[d.id])}
+                    if (income_data[d.id] >= val) {return color2(income_data[d.id])}
                     else { return "#EEEEEE" }           
             ;}).duration(0)
             
         d3.selectAll("circle").remove();
 
         svg.selectAll("circle")
-            .data(cities.filter(function(d) { return (income_data[d.county] <= val) }))
+            .data(cities.filter(function(d) { return (income_data[d.county] >= val) }))
             .enter()
             .append("circle")
             .attr("cx",function(d) { return projection([d.lon,d.lat])[0];
@@ -644,7 +629,7 @@ function update3(){
          
             svg.selectAll(".textCity").remove();
             g.selectAll("text")
-                .data(cities.filter(function(d) { return (income_data[d.county] <= val) }))
+                .data(cities.filter(function(d) { return (income_data[d.county] >= val) }))
                 .enter()
                 .append("text")
                 .text(function(d){
@@ -672,7 +657,8 @@ function update3(){
                 .style("text-anchor", "middle") 
                 .attr("font-weight", 550)
                 .style("fill", "#696969")
-                .text(`Earnings of drivers are less than ${val} times the earnings of transit riders`);
+                //.text(`Earnings of drivers are less than ${val} times the earnings of transit riders`);
+                .text(`Earnings of transit riders are more than ${val}% of drivers' earnings`);
             
             
         }
