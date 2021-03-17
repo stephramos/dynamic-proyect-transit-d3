@@ -12,6 +12,7 @@ body {
   padding: 0;
   width: 100%;
   line-height: 1.5;
+  font-size: 14;
 }
 
 /* Add a black background color to the top navigation */
@@ -182,15 +183,24 @@ margin-top: 0;
 #outro {
   /*background-color: #f3f3f3;*/
   padding: 1rem;
+  display: flex;
+  flex-direction: column;
   }
 
-.figures_city{
+.select_city {
+    flex: 1;
+  }
+
+.figures_cities {
+    flex: 3;
+    overflow: scroll;
+  }
+
+/*.figures_city{
   display: flex;
   justify-content: space-between;
   position: relative;
-  display: -webkit-box;
-  display: -ms-flexbox;
-}
+}*/
 
 #chart{
   padding: 1rem;
@@ -213,7 +223,9 @@ footer {
     /*background-color: rgb(51, 51, 51);*/
     background-color: lightgray;
     color: black;
-    width: 100%;
     font-size: 12px;
-    position: static;
+    width: 100%;
+    left:0px;
+    bottom:0px;
+    /*position: fixed;*/
   }

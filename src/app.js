@@ -213,7 +213,7 @@ function update1(){
             }, delay));
             delay += 700;
         })
-}
+    }
   
     function mytransition1(val){
         g.selectAll("path").data(topojson.feature(us, us.objects.counties).features)
@@ -365,7 +365,7 @@ function update2(){
         .attr("text-anchor", "middle")  
         .style("font-size", "16px") 
         .attr("font-weight", 550)
-        .text("Additional commute lenght for public transit users");
+        .text("Additional commute length for public transit users");
     
     svg.append("text")
         .attr("x", width/2)             
@@ -662,7 +662,7 @@ function update3(){
             
             
         }
-}
+    }
 
 var main = d3.select("main");
 var scrolly = main.select("#scrolly");
@@ -676,11 +676,11 @@ var scroller = scrollama();
 // generic window resize listener event
 function handleResize() {
   // 1. update height of step elements
-  var stepH = Math.floor(window.innerHeight * 0.75);
+  var stepH = Math.floor(window.innerHeight * 0.82);
   step.style("height", stepH + "px");
 
   var figureHeight = window.innerHeight / 2;
-  var figureMarginTop = (window.innerHeight - figureHeight) / 2;
+  var figureMarginTop = (window.innerHeight - figureHeight) / 2.6;
 
   figure
     .style("height", height + "px")
@@ -781,8 +781,6 @@ function donut(data){
     svg.append("g")
         .attr("class", "lines");
 
-    // Create dummy data
-    //var data = {a: 9, b: 20, c:30, d:8, e:12, f:3, g:7, h:14}
     // set the color scale
     var color = d3.scaleOrdinal()
         .domain(["Driving", "Public transportation", 
@@ -796,7 +794,7 @@ function donut(data){
 
     // The arc generator
     var arc = d3.arc()
-        .innerRadius(radius * 0.5)         // This is the size of the donut hole
+        .innerRadius(radius * 0.5) // This is the size of the donut hole
         .outerRadius(radius * 0.8)
 
     // Another arc that won't be drawn. Just for labels positioning
@@ -850,18 +848,11 @@ function donut(data){
         .text(function(d) { return d } );
 
     function update_donut(city){
-    
-        //var data_ready = pie(d3Collection.entries(city))
-    // Build the pie chart: Basically, each part of the pie is a path that we build using the arc function.
-        
-        //d3.selectAll(".allSlices").remove();
-
 
         let slice = svg
             .selectAll("path")
             .data(pie(city), key)
         
-            
         slice.enter().append("path")
             .merge(slice)
             .transition()
@@ -917,10 +908,7 @@ function donut(data){
                 else{
                     return ''
                 }
-            })
-        
-        //textSlice.exit().remove();
- 
+            }) 
         }
     
     var dropdownChange = function() {
@@ -937,15 +925,15 @@ function donut(data){
                 {"key": "Other", "value": city_all["Taxicab, motorcycle, or other"] / city_all["Total transport"]}]
             
             let time = [{"key": "Driving", "value": city_all["Time driving"] / city_all["Car, truck, or van"]},
-            {"key": "Public transportation", "value":city_all["Time public transportation"] /city_all["Public transportation"]}, 
-            {"key": "Walked", "value": city_all["Time walking"] / city_all["Walked"]},
-            {"key": "Other", "value": city_all["Time Taxicab, motorcycle, bicycle, or other"] / (+city_all["Taxicab, motorcycle, or other"] + +city_all["Bicycle"])}]
+                {"key": "Public transportation", "value":city_all["Time public transportation"] /city_all["Public transportation"]}, 
+                {"key": "Walked", "value": city_all["Time walking"] / city_all["Walked"]},
+                {"key": "Other", "value": city_all["Time Taxicab, motorcycle, bicycle, or other"] / (+city_all["Taxicab, motorcycle, or other"] + +city_all["Bicycle"])}]
 
             let income = [{"key": "Driving", "value": city_all["Earnings Drove alone"]},
-            {"key": "Public transportation", "value":city_all["Earnings Public transportation"]}, 
-            {"key": "Walked", "value": city_all["Earnings Walked"]},
-            {"key": "Worked at home", "value": city_all["Earnings Worked at home"]},
-            {"key": "Other", "value": city_all["Earnings Taxicab, motorcycle, bicycle, or other"]}]
+                {"key": "Public transportation", "value":city_all["Earnings Public transportation"]}, 
+                {"key": "Walked", "value": city_all["Earnings Walked"]},
+                {"key": "Worked at home", "value": city_all["Earnings Worked at home"]},
+                {"key": "Other", "value": city_all["Earnings Taxicab, motorcycle, bicycle, or other"]}]
 
             update_donut(city);
             updateBars(time);
@@ -965,24 +953,26 @@ function donut(data){
         .attr("value", function (d) { return d; })
         .text(function (d) {
             return d[0].toUpperCase() + d.slice(1,d.length); // capitalize 1st letter
-        });
+        })
+        .property("selected", function(d){ return d === "U.S."; });
+
         
     // Handler for dropdown value change
-    let anaheim_data = data.filter(d => d.city == "Anaheim")[0]
+    let us_data = data.filter(d => d.city == "U.S.")[0]
 
-    let anaheim_donut = [{"key": "Driving", "value": anaheim_data["Car, truck, or van"] / anaheim_data["Total transport"]},
-                {"key": "Public transportation", "value":anaheim_data["Public transportation"] / anaheim_data["Total transport"]}, 
-                {"key": "Bicycle", "value": anaheim_data["Bicycle"] / anaheim_data["Total transport"]},
-                {"key": "Walked", "value": anaheim_data["Walked"] / anaheim_data["Total transport"]},
-                {"key": "Worked at home", "value": anaheim_data["Worked at home"] / anaheim_data["Total transport"]},
-                {"key": "Other", "value": anaheim_data["Taxicab, motorcycle, or other"] / anaheim_data["Total transport"]}]
+    let us_donut = [{"key": "Driving", "value": us_data["Car, truck, or van"] / us_data["Total transport"]},
+                {"key": "Public transportation", "value":us_data["Public transportation"] / us_data["Total transport"]}, 
+                {"key": "Bicycle", "value": us_data["Bicycle"] / us_data["Total transport"]},
+                {"key": "Walked", "value": us_data["Walked"] / us_data["Total transport"]},
+                {"key": "Worked at home", "value": us_data["Worked at home"] / us_data["Total transport"]},
+                {"key": "Other", "value": us_data["Taxicab, motorcycle, or other"] / us_data["Total transport"]}]
     
-    let anaheim_time = [{"key": "Driving", "value": anaheim_data["Time driving"] / anaheim_data["Car, truck, or van"]},
-                {"key": "Public transportation", "value":anaheim_data["Time public transportation"] / anaheim_data["Public transportation"]}, 
-                {"key": "Walked", "value": anaheim_data["Time walking"] / anaheim_data["Walked"]},
-                {"key": "Other", "value": anaheim_data["Time Taxicab, motorcycle, bicycle, or other"] / (+anaheim_data["Taxicab, motorcycle, or other"] + +anaheim_data["Bicycle"])}]
+    let us_time = [{"key": "Driving", "value": us_data["Time driving"] / us_data["Car, truck, or van"]},
+                {"key": "Public transportation", "value":us_data["Time public transportation"] / us_data["Public transportation"]}, 
+                {"key": "Walked", "value": us_data["Time walking"] / us_data["Walked"]},
+                {"key": "Other", "value": us_data["Time Taxicab, motorcycle, bicycle, or other"] / (+us_data["Taxicab, motorcycle, or other"] + +us_data["Bicycle"])}]
 
-    update_donut(anaheim_donut);
+    update_donut(us_donut);
     
 
     ///////TIME CHART////
@@ -1068,15 +1058,15 @@ function donut(data){
             .attr("height", function(d) { return height_bar - y(d.value); })
             .attr("fill", "#726a95")
     }
-    updateBars(anaheim_time)
+    updateBars(us_time)
 
     /// Income Chart
 
-    let anaheim_income = [{"key": "Driving", "value": anaheim_data["Earnings Drove alone"]},
-        {"key": "Public transportation", "value":anaheim_data["Earnings Public transportation"]}, 
-        {"key": "Walked", "value": anaheim_data["Earnings Walked"]},
-        {"key": "Worked at home", "value": anaheim_data["Earnings Worked at home"]},
-        {"key": "Other", "value": anaheim_data["Earnings Taxicab, motorcycle, bicycle, or other"]}]
+    let us_income = [{"key": "Driving", "value": us_data["Earnings Drove alone"]},
+        {"key": "Public transportation", "value":us_data["Earnings Public transportation"]}, 
+        {"key": "Walked", "value": us_data["Earnings Walked"]},
+        {"key": "Worked at home", "value": us_data["Earnings Worked at home"]},
+        {"key": "Other", "value": us_data["Earnings Taxicab, motorcycle, bicycle, or other"]}]
         
     var svg_income = d3.select("#income")
         .append("svg")
@@ -1153,7 +1143,7 @@ function donut(data){
             .attr("height", function(d) { return height_bar - y_income(d.value); })
             .attr("fill", "#b67171")
     }
-    updateIncome(anaheim_income)
+    updateIncome(us_income)
 
 
 }  
