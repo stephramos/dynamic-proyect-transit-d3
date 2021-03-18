@@ -1,7 +1,3 @@
-// if the data you are going to import is small, then you can import it using es6 import
-// (I like to use use screaming snake case for imported json)
-// import MY_DATA from './app/data/example.json'
-
 import {myExampleUtil} from './utils';
 import {select} from 'd3-selection';
 // this command imports the css file, if you remove it your css wont be applied!
@@ -11,23 +7,20 @@ import * as d3 from "d3";
 import * as topojson from "topojson-client";
 import scrollama from "scrollama";
 import "intersection-observer";
-//import * as d3Collection from 'd3-collection';
 
 //npm install d3 --save
 //npm install topojson-client
 //npm install scrollama intersection-observer --save
-//npm install d3-collection
 
 
-// this is just one example of how to import data. there are lots of ways to do it!
-
+//***** Reading the data ******//
 Promise.all([
     //d3.json("https://unpkg.com/us-atlas@1/us/10m.json"),
     d3.json("https://unpkg.com/us-atlas@3/counties-10m.json"),
     d3.csv("data/transit.csv"),
     d3.csv("data/cities.csv"),
     d3.csv("data/time.csv"),
-    d3.csv("data/income1.csv"),
+    d3.csv("data/income.csv"),
     d3.csv("data/donut_data.csv")
 ]).then(results => {
     console.log("loading data")
@@ -43,6 +36,7 @@ Promise.all([
 })
 
 
+//***** Maps and Scrolly ******//
 function myVis(us, data, cities, time_data, income_data){
 
     var margin = {top: 0, right: 0, bottom: 0, left: 0}
@@ -54,7 +48,6 @@ function myVis(us, data, cities, time_data, income_data){
     
     const color = d3.scaleThreshold()
         .domain([.1, .2, .5, 1, 2, 5, 10, 20])
-        //.range(d3.schemeBuPu[9])
         .range(["#f1fbfb", "#bfd3e6", "#9ebcda", "#8c96c6",
         "#8c6bb1", "#88419d", "#732b6d", "#4d004b", "#3f0722"]);
     
@@ -72,13 +65,14 @@ function myVis(us, data, cities, time_data, income_data){
   
     // Create SVG
     let svg = d3.select("#map")
-    .append("svg")
-    .attr("width", width)
-    .attr("height", height)
+        .append("svg")
+        .attr("width", width)
+        .attr("height", height)
     
     let g = svg.append("g")
 
 
+//***** First Map: Percentage of public transit commuters by county ******//
 function update1(){
     svg.selectAll(".textCity").remove();
     svg.selectAll(".subtitle").remove();
@@ -91,8 +85,7 @@ function update1(){
         .remove();
     // Bind TopoJSON data
     g.attr("class", "county").selectAll("path")
-        .data(topojson.feature(us, us.objects.counties).features) // Bind TopoJSON data elements
-    // pass through what objects you want to use -- in this case we are doing county lines
+        .data(topojson.feature(us, us.objects.counties).features)
         .join("path")
         .attr("d", path)
         .style("fill", function(d) {      
@@ -164,7 +157,6 @@ function update1(){
            return format(+extent[0]) + " - " + format(+extent[1]);
        });
     
-    //Create Title 
     svg.append("text")
         .attr("x", width/2)             
         .attr("y", 30)
@@ -195,7 +187,6 @@ function update1(){
         .attr("text-anchor", "start")  
         .style("font-size", "10px")
         .style("text-anchor", "start") 
-        //.attr("font-weight", 550)
         .style("fill", "#696969")
         .text("Source: American Community Survey 5-Year Data (2019)");
  
@@ -271,7 +262,7 @@ function update1(){
 
     }
 
-
+//***** Second Map: Additional commute length for public transit users ******//
 function update2(){
  
     d3.selectAll("path").interrupt();
@@ -465,7 +456,7 @@ function update2(){
     
         }
 
-
+//***** Third Map: Difference in earnings between drivers and public transit riders ******//
 function update3(){
      
     const color2 = d3.scaleThreshold()
@@ -664,6 +655,7 @@ function update3(){
         }
     }
 
+//***** Scrollama ******//
 var main = d3.select("main");
 var scrolly = main.select("#scrolly");
 var figure = scrolly.select("figure");
@@ -752,11 +744,10 @@ function init() {
 
 // kick things off
 init();
-
-//return svg.node();
     
 }
 
+//***** Donut ******//
 function donut(data){
     // set the dimensions and margins of the graph
     let width = 500
@@ -975,7 +966,7 @@ function donut(data){
     update_donut(us_donut);
     
 
-    ///////TIME CHART////
+    //***** Time Bar Chart ******//
     var margin_bar = {top: 50, right: 30, bottom: 70, left: 60},
     width_bar = 460 - margin_bar.left - margin_bar.right,
     height_bar = 420 - margin_bar.top - margin_bar.bottom;
@@ -1060,8 +1051,7 @@ function donut(data){
     }
     updateBars(us_time)
 
-    /// Income Chart
-
+    //***** Income Bar Chart ******//
     let us_income = [{"key": "Driving", "value": us_data["Earnings Drove alone"]},
         {"key": "Public transportation", "value":us_data["Earnings Public transportation"]}, 
         {"key": "Walked", "value": us_data["Earnings Walked"]},
@@ -1128,7 +1118,6 @@ function donut(data){
         y_income.domain([0, d3.max(city_income, function(d) { return d.value; })])
         yAxis_income.transition().duration(1000).call(d3.axisLeft(y_income));
 
-    // Bars
         var u = svg_income.selectAll("rect")
             .data(city_income)
         
